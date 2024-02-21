@@ -10,8 +10,9 @@ export default function Slider() {
   };
 
   return (
+    <div className='max-w-7xl mx-auto px-3'>
     <Carousel 
-      className="  mt-5  max-w-7xl mx-auto" 
+      className="  mt-5  " 
       transition={{ type: "fade" }} 
       autoplay={autoplay} 
       loop={true} 
@@ -24,5 +25,6 @@ export default function Slider() {
       <SliderCard/>
       <SliderCard/>
     </Carousel>
+      </div>
   );
 }
