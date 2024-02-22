@@ -8,8 +8,6 @@ const Header = () => {
   return (
     <>
     <Slider/>
-    <Title/>
-    <Card/>
     </>
   )
 }
