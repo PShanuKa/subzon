@@ -67,27 +67,27 @@ const SinglePage = () => {
           </div>
         </div>
         <div className="grid gap-3">
-          <p className="font-semibold text-[22px]">
+          <p className="font-semibold text-[18px] md:text-[22px]">
             Year : <span className="font-normal">December 22,2023 (USA)</span>
           </p>
-          <p className="font-semibold text-[22px]">
+          <p className="font-semibold text-[18px] md:text-[22px]">
             Imdb : <span className="font-normal">8.9/10</span>
           </p>
-          <p className="font-semibold text-[22px]">
+          <p className="font-semibold text-[18px] md:text-[22px]">
             Starting :{" "}
             <span className="font-normal">
               Amber Heard, Jason Momoa, Patrick Wilson
             </span>
           </p>
-          <p className="font-semibold text-[22px]">
+          <p className="font-semibold text-[18px] md:text-[22px]">
             Language : <span className="font-normal">English</span>
           </p>
-          <p className="font-semibold text-[22px]">
+          <p className="font-semibold text-[18px] md:text-[22px]">
             Director : <span className="font-normal">James Wan</span>
           </p>
         </div>
         <div className="mt-3">
-          <p className="font-semibold text-[22px]">Director</p>
+          <p className="font-semibold text-[22px]">Movie Trailer</p>
           <div>
             <iframe
               className="md:w-[500px] w-full md:h-[300px] h-[250px] mt-3 rounded-lg"
