@@ -6,8 +6,8 @@ import { IoMdDownload } from "react-icons/io";
 
 const SinglePage = () => {
   return (
-    <div className="max-w-7xl mx-auto grid grid-cols-5 mt-5">
-      <div className="w-full md:col-span-4 col-span-5 shadow-lg p-3 rounded-lg">
+    <div className="max-w-7xl mx-auto grid grid-cols-5 mt-2">
+      <div className="w-full md:col-span-4 col-span-5 md:m-3 shadow-lg p-3 rounded-lg">
         <div className="flex items-center gap-1">
           <FaRegClock size={16} />
           <h1 className="text-[16px] font-medium ">22 Hours ago</h1>
@@ -54,7 +54,7 @@ const SinglePage = () => {
         </div>
 
         <img
-          className="object-cover rounded-lg h-[400px] w-full"
+          className="object-cover rounded-lg  w-full"
           src="https://www.hollywoodreporter.com/wp-content/uploads/2019/03/avatar-publicity_still-h_2019.jpg?w=1296"
           alt=""
         />
@@ -90,7 +90,7 @@ const SinglePage = () => {
           <p className="font-semibold text-[22px]">Director</p>
           <div>
             <iframe
-              className="w-[500px] h-[300px] mt-3 rounded-lg"
+              className="md:w-[500px] w-full md:h-[300px] h-[250px] mt-3 rounded-lg"
               src="https://www.youtube.com/embed/ByAn8DF8Ykk?si=aVDX1MpwqODmIfba"
               title="YouTube video player"
               frameborder="0"
