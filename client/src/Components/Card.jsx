@@ -5,10 +5,10 @@ import { IoMdDownload } from "react-icons/io";
 
 const Card = () => {
   return (
-    <div className="w-full  p-3 border shadow-md rounded-lg group">
+    <div className="w-full  p-3 border shadow-md rounded-lg group hover:bg-gray-100 ">
       <div>
         <img
-          className="rounded-lg object-fill h-[200px] w-full transition-all group-hover:scale-[102%] group-hover:opacity-80 duration-75"
+          className="rounded-lg object-cover h-[200px] w-full transition-all group-hover:scale-[102%] group-hover:opacity-80 duration-75"
           src="https://images.unsplash.com/photo-1543536448-d209d2d13a1c?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
           alt=""
         />
