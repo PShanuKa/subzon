@@ -18,17 +18,8 @@ import {
   Bars3Icon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
-import {
-  Bars4Icon,
-  GlobeAmericasIcon,
-  NewspaperIcon,
-  PhoneIcon,
-  RectangleGroupIcon,
-  SquaresPlusIcon,
-  SunIcon,
-  TagIcon,
-  UserGroupIcon,
-} from "@heroicons/react/24/solid";
+
+import { Link } from "react-router-dom";
 
 const navListMenuItems = [
   {
@@ -118,7 +109,7 @@ function MoviesListMenu() {
   const renderItems = navListMenuItems.map(({ title }, key) => (
     <a href="#" key={key}>
       <MenuItem className="grid items-center gap-3 rounded-lg">
-        <div>{title}</div>
+        <p>{title}</p>
       </MenuItem>
     </a>
   ));
@@ -134,7 +125,9 @@ function MoviesListMenu() {
       >
         <MenuHandler>
           <Typography as="div" variant="small" className="font-medium">
+            <Link to="/category">
             <ListItem
+            
               className="flex items-center gap-2 py-2 pr-4 font-medium text-gray-900 font-sinhala"
               selected={isMenuOpen || isMobileMenuOpen}
               onClick={() => setIsMobileMenuOpen((cur) => !cur)}
@@ -145,14 +138,15 @@ function MoviesListMenu() {
                 className={`hidden h-3 w-3 transition-transform lg:block ${
                   isMenuOpen ? "rotate-180" : ""
                 }`}
-              />
+                />
               <ChevronDownIcon
                 strokeWidth={2.5}
                 className={`block h-3 w-3 transition-transform lg:hidden ${
                   isMobileMenuOpen ? "rotate-180" : ""
                 }`}
-              />
+                />
             </ListItem>
+                </Link>
           </Typography>
         </MenuHandler>
         <MenuList className="hidden max-w-screen-xl rounded-xl lg:block">
@@ -160,7 +154,7 @@ function MoviesListMenu() {
             <div>
               {" "}
               <Typography
-                // as="a"
+                as="a"
                 href="#"
                 variant="small"
                 color="blue-gray"
@@ -173,7 +167,7 @@ function MoviesListMenu() {
               {navMoviesLan.map(({ title }, key) => (
                 <a href="#" key={key}>
                   <MenuItem className="grid items-center gap-3 rounded-lg font-sinhala">
-                    <div>{title}</div>
+                    <p>{title}</p>
                   </MenuItem>
                 </a>
               ))}
@@ -193,7 +187,7 @@ function MoviesListMenu() {
               {navMoviesCategory.map(({ title }, key) => (
                 <a href="#" key={key}>
                   <MenuItem className="grid items-center gap-3 rounded-lg font-sinhala">
-                    <div>{title}</div>
+                    <p>{title}</p>
                   </MenuItem>
                 </a>
               ))}
@@ -220,7 +214,7 @@ function MoviesListMenu() {
               {navMoviesLan.map(({ title }, key) => (
                 <a href="#" key={key}>
                   <MenuItem className="grid items-center gap-3 rounded-lg font-sinhala">
-                    <div>{title}</div>
+                    <p>{title}</p>
                   </MenuItem>
                 </a>
               ))}
@@ -240,7 +234,7 @@ function MoviesListMenu() {
               {navMoviesCategory.map(({ title }, key) => (
                 <a href="#" key={key}>
                   <MenuItem className="grid items-center gap-3 rounded-lg">
-                    <div>{title}</div>
+                    <p>{title}</p>
                   </MenuItem>
                 </a>
               ))}
@@ -259,7 +253,7 @@ function TvShowListMenu() {
   const renderItems = navListMenuItems.map(({ title }, key) => (
     <a href="#" key={key}>
       <MenuItem className="grid items-center gap-3 rounded-lg font-sinhala">
-        <div>{title}</div>
+        <p>{title}</p>
       </MenuItem>
     </a>
   ));
@@ -314,7 +308,7 @@ function TvShowListMenu() {
               {navTvShowsLan.map(({ title }, key) => (
                 <a href="#" key={key}>
                   <MenuItem className="grid items-center gap-3 rounded-lg font-sinhala">
-                    <div>{title}</div>
+                    <div><p>{title}</p></div>
                   </MenuItem>
                 </a>
               ))}
@@ -334,7 +328,7 @@ function TvShowListMenu() {
               {navTvShowCategory.map(({ title }, key) => (
                 <a href="#" key={key}>
                   <MenuItem className="grid items-center gap-3 rounded-lg font-sinhala">
-                    <div>{title}</div>
+                    <div><p>{title}</p></div>
                   </MenuItem>
                 </a>
               ))}
@@ -361,7 +355,7 @@ function TvShowListMenu() {
               {navTvShowsLan.map(({ title }, key) => (
                 <a href="#" key={key}>
                   <MenuItem className="grid items-center gap-3 rounded-lg font-sinhala">
-                    <div>{title}</div>
+                    <div><p>{title}</p></div>
                   </MenuItem>
                 </a>
               ))}
@@ -381,7 +375,7 @@ function TvShowListMenu() {
               {navTvShowCategory.map(({ title }, key) => (
                 <a href="#" key={key}>
                   <MenuItem className="grid items-center gap-3 rounded-lg font-sinhala">
-                    <div>{title}</div>
+                    <div><p>{title}</p></div>
                   </MenuItem>
                 </a>
               ))}
@@ -441,14 +435,17 @@ export default function NavbarWithMegaMenu() {
   return (
     <Navbar className="max-w-full px-4 py-2 rounded-none">
       <div className="flex items-center max-w-7xl mx-auto justify-between text-blue-gray-900">
+        
         <Typography
-          as="a"
-          href="#"
+          as={Link}
+          to="/"
+
           variant="h3"
           className="mr-4 cursor-pointer py-1.5 lg:ml-2 "
-        >
+          >
           SubZon
         </Typography>
+    
 
         <div className="flex items-center">
           <div className="hidden lg:block ">

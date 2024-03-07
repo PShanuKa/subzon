@@ -4,8 +4,18 @@ import { FaRegClock, FaDownload, FaUser, FaComment } from "react-icons/fa";
 import { BiLike, BiDislike } from "react-icons/bi";
 import { IoMdDownload } from "react-icons/io";
 import { IoSend } from "react-icons/io5";
+import { useParams } from "react-router-dom";
+import { useGetABlogQuery } from "../api/blogSlice";
+
+
 
 const SinglePage = () => {
+  const { id } = useParams();
+  const { data: AMovieData } = useGetABlogQuery(id);
+
+
+ 
+
   return (
     <div>
       <div className="max-w-7xl mx-auto grid grid-cols-5 mt-2">
@@ -15,7 +25,7 @@ const SinglePage = () => {
             <h1 className="text-[16px] font-medium ">22 Hours ago</h1>
           </div>
           <h1 className=" text-[24px] font-medium ">
-            Dunki (2023) Sinhala Subtitles |{" "}
+            Dunki (2023) Sinhala Subtitles |
             <span className="font-sinhala"> ඩන්කි සිංහල උපසිරැසි සමග</span>
           </h1>
           <div className="flex gap-5 mt-1 items-center opacity-70">
@@ -57,7 +67,8 @@ const SinglePage = () => {
 
           <img
             className="object-cover rounded-lg  w-full"
-            src="https://www.hollywoodreporter.com/wp-content/uploads/2019/03/avatar-publicity_still-h_2019.jpg?w=1296"
+            src={AMovieData?.blog?.thumbnail
+            }
             alt=""
           />
           <div className="flex justify-end mt-3">
@@ -91,14 +102,14 @@ const SinglePage = () => {
           <div className="mt-3">
             <p className="font-semibold text-[22px]">Movie Trailer</p>
             <div>
-              <iframe
+              {/* <iframe
                 className="md:w-[500px] w-full md:h-[300px] h-[250px] mt-3 rounded-lg"
                 src="https://www.youtube.com/embed/ByAn8DF8Ykk?si=aVDX1MpwqODmIfba"
                 title="YouTube video player"
-                frameborder="0"
+                frameBorder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowfullscreen
-              ></iframe>
+                allowFullScreen
+              ></iframe> */}
             </div>
           </div>
 
@@ -154,7 +165,7 @@ const SinglePage = () => {
               usually con
             </p>
           </div>
-          {/* Download Section  */}
+
           <div className="justify-center w-full grid my-10">
             <h1 className=" text-[32px] underline font-semibold text-center">
               Direct Download
@@ -192,85 +203,94 @@ const SinglePage = () => {
               </Button>
             </div>
           </div>
-          {/* Download Section  */}
         </div>
       </div>
-      {/* comment section  */}
-      <div className="max-w-7xl mx-auto grid grid-cols-5 mt-2">
 
-      <div className="w-full md:col-span-4 col-span-5 md:m-3   p-3 ">
+      <div className="max-w-7xl mx-auto grid grid-cols-5 mt-2">
+        <div className="w-full md:col-span-4 col-span-5 md:m-3   p-3 ">
           <h1 className="text-[22px]">2,524 Comments</h1>
           <div className="w-full flex gap-5 items-center mt-5 ">
-            <Avatar src="https://docs.material-tailwind.com/img/face-2.jpg" alt="avatar" />
+            <Avatar
+              src="https://docs.material-tailwind.com/img/face-2.jpg"
+              alt="avatar"
+            />
             <Input variant="standard" label="Add a comment" />
-            <IoSend className="opacity-70 " size={24}/>
+            <IoSend className="opacity-70 " size={24} />
           </div>
           <div className="w-full flex gap-5 items-center mt-10">
-            <Avatar src="https://docs.material-tailwind.com/img/face-2.jpg" alt="avatar" />
+            <Avatar
+              src="https://docs.material-tailwind.com/img/face-2.jpg"
+              alt="avatar"
+            />
             <div>
               <div className="flex gap-5">
                 <p>@susa35</p>
                 <p className="opacity-60">6 days ago</p>
               </div>
-              <p>dgvasgv   gdajsg  vgdvagv  gjhavdv  jav ghdva</p>
+              <p>dgvasgv gdajsg vgdvagv gjhavdv jav ghdva</p>
               <div className="flex gap-4">
                 <div className="flex gap-2 items-center">
-                <BiLike/>
-                <p>221</p>
+                  <BiLike />
+                  <p>221</p>
                 </div>
                 <div className="flex gap-2 items-center">
-                <BiDislike />
-                <p></p>
+                  <BiDislike />
+                  <p></p>
                 </div>
                 <p>Reply</p>
               </div>
             </div>
           </div>
           <div className="w-full flex gap-5 items-center mt-10">
-            <Avatar src="https://docs.material-tailwind.com/img/face-2.jpg" alt="avatar" />
+            <Avatar
+              src="https://docs.material-tailwind.com/img/face-2.jpg"
+              alt="avatar"
+            />
             <div>
               <div className="flex gap-5">
                 <p>@susa35</p>
                 <p className="opacity-60">6 days ago</p>
               </div>
-              <p>dgvasgv   gdajsg  vgdvagv  gjhavdv  jav ghdva</p>
+              <p>dgvasgv gdajsg vgdvagv gjhavdv jav ghdva</p>
               <div className="flex gap-4">
                 <div className="flex gap-2 items-center">
-                <BiLike/>
-                <p>221</p>
+                  <BiLike />
+                  <p>221</p>
                 </div>
                 <div className="flex gap-2 items-center">
-                <BiDislike />
-                <p></p>
+                  <BiDislike />
+                  <p>23</p>
                 </div>
                 <p>Reply</p>
               </div>
             </div>
           </div>
           <div className="w-full flex gap-5 items-center mt-10">
-            <Avatar src="https://docs.material-tailwind.com/img/face-2.jpg" alt="avatar" />
+            <Avatar
+              src="https://docs.material-tailwind.com/img/face-2.jpg"
+              alt="avatar"
+            />
             <div>
               <div className="flex gap-5">
                 <p>@susa35</p>
                 <p className="opacity-60">6 days ago</p>
               </div>
-              <p>dgvasgv   gdajsg  vgdvagv  gjhavdv  jav ghdva</p>
+              <p>dgvasgv gdajsg vgdvagv gjhavdv jav ghdva</p>
               <div className="flex gap-4">
                 <div className="flex gap-2 items-center">
-                <BiLike/>
-                <p>221</p>
+                  <BiLike />
+                  <p>221</p>
                 </div>
                 <div className="flex gap-2 items-center">
-                <BiDislike />
-                <p></p>
+                  <BiDislike />
+                  <p></p>
                 </div>
                 <p>Reply</p>
               </div>
             </div>
           </div>
+        </div>
       </div>
-      </div>
-      {/* comment section  */}
     </div>
   );
 };

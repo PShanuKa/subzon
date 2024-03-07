@@ -6,9 +6,9 @@ import Title from './Title'
 
 const Header = () => {
   return (
-    <>
+    <div className='mb-10'>
     <Slider/>
-    </>
+    </div>
   )
 }
 
