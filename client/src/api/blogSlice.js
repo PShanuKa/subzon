@@ -14,8 +14,20 @@ export const blogApiSlice = apiSlice.injectEndpoints({
                 method: "GET",
             })
         }),
+        postLikeComment: builder.mutation({
+            query: (id) => ({
+                url: `${BLOG_URL}/comment/like/${id}`,
+                method: "POST",
+            })
+        }),
+        postDisLikeComment: builder.mutation({
+            query: (id) => ({
+                url: `${BLOG_URL}/comment/dislike/${id}`,
+                method: "POST",
+            })
+        }),
     })
 })
 
 
-export const {useGetAllBlogsQuery, useGetABlogQuery} =blogApiSlice
+export const {useGetAllBlogsQuery, useGetABlogQuery, usePostLikeCommentMutation,usePostDisLikeCommentMutation} =blogApiSlice

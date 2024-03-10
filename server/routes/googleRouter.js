@@ -17,15 +17,14 @@ googleRouter.get(
     if (req.user) {
       const findUser = await User.findOne({ email: req.user.email });
       if (findUser) {
-        res.status(200).json({
-          status: true,
-          message: "Logged In Successfully!",
-          token: generateToken(findUser?._id),
-          role: findUser?.roles,
-          username: findUser?.firstname + " " + findUser?.lastname,
-          user_image: findUser?.user_image,
-          from: "google",
-        });
+        const token = generateToken(findUser._id);
+        const redirectUrl = `http://localhost:5173/login?token=${token}&role=${
+          findUser.roles
+        }&firstname=${encodeURIComponent(
+          findUser.firstname)}&userid=${encodeURIComponent(
+            findUser._id)}&lastname=${encodeURIComponent(
+            findUser.lastname)}&user_image=${encodeURIComponent(findUser.user_image)}&from=google`;
+        res.redirect(redirectUrl);
       }
     } else {
       throw new Error("Something went wrong!");

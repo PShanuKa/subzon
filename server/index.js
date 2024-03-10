@@ -35,6 +35,7 @@ app.use(passport.session()); // Passport session middleware
 import "./utils/passport.js"
 import { categoryRouter } from './routes/categoryRoute.js';
 import { commentRouter } from './routes/commentRouter.js';
+import { languageRouter } from './routes/languageRoute.js';
 
 // Connect to the database
 dbConnect();
@@ -45,6 +46,7 @@ app.use("/", googleRouter);
 app.use("/api/user", userRouter);
 app.use("/api/blog", blogRouter);
 app.use("/api/category", categoryRouter);
+app.use("/api/language", languageRouter);
 app.use("/api/comment", commentRouter);
 
 

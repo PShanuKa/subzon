@@ -12,8 +12,6 @@ export const registerAUser = asyncHandler(async (req, res) => {
   if (!findUser) {
     const createUser = await User.create(req.body);
     createUser.password = null;
-    createUser.roles = null;
-    createUser.isblocked = null;
     res.status(200).json({
       status: true,
       message: "User created successfully",
@@ -28,21 +26,21 @@ export const registerAUser = asyncHandler(async (req, res) => {
 export const loginUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
 
-  // check if user exitsr or not
-
-  const findUser = await User.findOne({ email: email });
+ 
+  const findUser = await User.findOne({ email });
 
   if (findUser && (await findUser.isPasswordMatched(password))) {
+    const { password: userPassword, ...userInfo } = findUser.toObject(); 
     res.status(200).json({
       status: true,
       message: "Logged In Successfully!",
-      token: generateToken(findUser?._id),
-      role: findUser?.roles,
-      username: findUser?.firstname + " " + findUser?.lastname,
-      user_image: findUser?.user_image,
+      token: generateToken(findUser._id), 
+      userInfo,
     });
   } else {
-    throw new Error("invalid credentials");
+    
+    res.status(401);
+    throw new Error("Invalid email or password");
   }
 });
 

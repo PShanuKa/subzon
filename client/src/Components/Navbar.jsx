@@ -12,14 +12,53 @@ import {
   MenuList,
   MenuItem,
   Input,
+  Avatar,
 } from "@material-tailwind/react";
 import {
   ChevronDownIcon,
   Bars3Icon,
   XMarkIcon,
+  ChevronUpDownIcon,
 } from "@heroicons/react/24/outline";
+import {
+  UserCircleIcon,
+  CodeBracketSquareIcon,
+  Square3Stack3DIcon,
+  Cog6ToothIcon,
+  InboxArrowDownIcon,
+  LifebuoyIcon,
+  PowerIcon,
+  RocketLaunchIcon,
+  Bars2Icon,
+} from "@heroicons/react/24/solid";
+import { FaUser } from "react-icons/fa6";
 
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../features/authSlice";
+import { toast } from "react-toastify";
+
+const profileMenuItems = [
+  {
+    label: "My Profile",
+    icon: UserCircleIcon,
+    link: 'Profile'
+  },
+  {
+    label: "Edit Profile",
+    icon: Cog6ToothIcon,
+  },
+  // {
+  //   label: "Inbox",
+  //   icon: InboxArrowDownIcon,
+  // },
+  // {
+  //   label: "Help",
+  //   icon: LifebuoyIcon,
+  // },
+
+];
+
 
 const navListMenuItems = [
   {
@@ -101,10 +140,87 @@ const navTvShowCategory = [
     title: "Funny",
   },
 ];
+function ProfileMenu() {
+  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+  const  userInfo  = useSelector((state) => state.auth.userInfo);
+  const closeMenu = () => setIsMenuOpen(false);
+
+  const dispatch = useDispatch();
+ 
+  return (
+    <Menu open={isMenuOpen} handler={setIsMenuOpen} placement="bottom-end">
+      <MenuHandler>
+        <Button
+          variant="text"
+          color="blue-gray"
+          className="flex items-center gap-1 rounded-full py-0.5 pr-2 pl-0.5 lg:ml-auto"
+        >
+          <Avatar
+            variant="circular"
+            size="sm"
+            alt="tania andrew"
+            className="border border-gray-900 p-0.5"
+            src={userInfo.user_image}
+          />
+          
+        </Button>
+      </MenuHandler>
+      <MenuList className="p-1">
+        {profileMenuItems.map(({ label, icon, link }, key) => {
+          const isLastItem = key === profileMenuItems.length - 1;
+          return (
+            <MenuItem
+              key={label}
+              onClick={closeMenu}
+              className={`flex items-center gap-2 rounded`}
+            >
+              {React.createElement(icon, {
+                className: `h-4 w-4 `,
+                strokeWidth: 2,
+              })}
+              <Typography
+                as="span"
+                variant="small"
+                className="font-normal"
+                color="inherit"
+              >
+                {label}
+              </Typography>
+            </MenuItem>
+          );
+        })}
+        <MenuItem
+              key="2"
+              onClick={()=>(
+                closeMenu,
+                toast.success("Sign out Successfully"),
+                dispatch(logout())
+              )}
+              className={`flex items-center gap-2 rounded hover:bg-red-500/10 focus:bg-red-500/10 active:bg-red-500/10"`}
+            >
+              {React.createElement(PowerIcon, {
+                className: `h-4 w-4 text-red-500`,
+                strokeWidth: 2,
+              })}
+              <Typography
+                as="span"
+                variant="small"
+                className="font-normal"
+                color="red"
+              >
+                Log Out
+              </Typography>
+            </MenuItem>
+      </MenuList>
+    </Menu>
+  );
+}
 
 function MoviesListMenu() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
+
+
 
   const renderItems = navListMenuItems.map(({ title }, key) => (
     <a href="#" key={key}>
@@ -388,6 +504,8 @@ function TvShowListMenu() {
 }
 
 function NavList() {
+  const  userInfo  = useSelector((state) => state.auth.userInfo);
+  
   return (
     <List className="mt-4 mb-6 p-0 lg:mt-0 lg:mb-0 lg:flex-row lg:p-1">
       <MoviesListMenu />
@@ -405,17 +523,23 @@ function NavList() {
         </ListItem>
       </Typography>
 
-      <Typography
-        as="a"
-        href="#"
-        variant="small"
-        color="blue-gray"
-        className="font-medium"
-      >
-        <ListItem className="flex items-center gap-2 py-2 pr-4">
-          LOGIN / REGISTER
-        </ListItem>
-      </Typography>
+      {!userInfo ? (
+  <Typography
+    as={Link}
+    to="/login"
+    variant="small"
+    color="blue-gray"
+    className="font-medium"
+  >
+    <ListItem className="flex items-center gap-2 py-2 pr-4">
+      LOGIN / REGISTER
+    </ListItem>
+  </Typography>
+) : (
+  <ProfileMenu />
+)}
+     
+      
     </List>
   );
 }

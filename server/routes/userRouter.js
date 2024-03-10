@@ -11,7 +11,7 @@ userRouter.post("/login", loginUser);
 
 // all get routes
 userRouter.get("/all-users", authMiddleware,  getAllUser);
-userRouter.get("/:id", authMiddleware, getAUser);
+userRouter.get("/:id", getAUser);
 
 // all put routes
 userRouter.put("/update-profile", authMiddleware, updateUser);

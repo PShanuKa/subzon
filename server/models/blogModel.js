@@ -2,13 +2,13 @@ import mongoose from "mongoose";
 
 const videoLinkSchema = new mongoose.Schema({
     title: String,
-    link: String
+    link: String,
+    description: String,
 });
 
 const otherSchema = new mongoose.Schema({
     title: String,
     description: String,
-    
 });
 
 const sub_descriptionSchema = new mongoose.Schema({
@@ -17,11 +17,7 @@ const sub_descriptionSchema = new mongoose.Schema({
     link: String
 });
 
-const downloadSchema = new mongoose.Schema({
-    title: String,
-    description: String,
-    link: String
-});
+
 
 const blogSchema = new mongoose.Schema({
     title: {
@@ -61,12 +57,13 @@ const blogSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
-    description: String,
     trailer_url: String,
     video_links: [videoLinkSchema],
     other: [otherSchema],
     sub: [sub_descriptionSchema],
-    download: [downloadSchema],
+    downloadCount: {
+        type: Number
+    },
     
     comments: [{
         type: mongoose.Schema.Types.ObjectId,

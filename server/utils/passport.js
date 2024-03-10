@@ -23,7 +23,7 @@ passport.use(new GoogleStrategy({
       return done(null, user);
     } else {
       // Create a new user if not found
-      user = await User.create({
+      user = await User.create({  
         firstname: data.given_name,
         lastname: data.family_name,
         user_image: data.picture,

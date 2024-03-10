@@ -11,11 +11,7 @@ const categorySchema = new mongoose.Schema(
     sinhalaTitle: {
       type: String,
       // required: true,
-    },
-    slug: {
-      type: String,
-      // required: true,
-    },
+    }
   },
   {
     timestamps: true,
