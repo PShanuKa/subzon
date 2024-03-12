@@ -37,6 +37,11 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../features/authSlice";
 import { toast } from "react-toastify";
+import { useGetAllCategoryQuery } from "../api/categorySlice";
+import { useGetAllLanguageQuery } from "../api/languageSlice";
+
+
+
 
 const profileMenuItems = [
   {
@@ -141,6 +146,7 @@ const navTvShowCategory = [
   },
 ];
 function ProfileMenu() {
+  
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const  userInfo  = useSelector((state) => state.auth.userInfo);
   const closeMenu = () => setIsMenuOpen(false);
@@ -219,13 +225,15 @@ function ProfileMenu() {
 function MoviesListMenu() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
+  const { data: categoryData } = useGetAllCategoryQuery()
+  const { data: languageData } = useGetAllLanguageQuery()
 
 
 
-  const renderItems = navListMenuItems.map(({ title }, key) => (
+  const renderItems = categoryData?.categories?.map(( Category , key) => (
     <a href="#" key={key}>
       <MenuItem className="grid items-center gap-3 rounded-lg">
-        <p>{title}</p>
+        <p>{Category.title}</p>
       </MenuItem>
     </a>
   ));
@@ -280,10 +288,10 @@ function MoviesListMenu() {
                 භාෂාව
                 </ListItem>
               </Typography>
-              {navMoviesLan.map(({ title }, key) => (
+              {languageData?.language?.map(( languageDate , key) => (
                 <a href="#" key={key}>
                   <MenuItem className="grid items-center gap-3 rounded-lg font-sinhala">
-                    <p>{title}</p>
+                    <p>{languageDate?.title} ({languageDate?.sinhalaTitle})</p>
                   </MenuItem>
                 </a>
               ))}
@@ -300,10 +308,10 @@ function MoviesListMenu() {
                 වර්ගිකරණය
                 </ListItem>
               </Typography>
-              {navMoviesCategory.map(({ title }, key) => (
+              {categoryData?.categories?.map(( category , key) => (
                 <a href="#" key={key}>
                   <MenuItem className="grid items-center gap-3 rounded-lg font-sinhala">
-                    <p>{title}</p>
+                    <p>{category.title} ({category.sinhalaTitle})</p>
                   </MenuItem>
                 </a>
               ))}
@@ -327,10 +335,10 @@ function MoviesListMenu() {
                 භාෂාව
                 </ListItem>
               </Typography>
-              {navMoviesLan.map(({ title }, key) => (
+              {languageData?.language?.map(( languageDate , key) => (
                 <a href="#" key={key}>
                   <MenuItem className="grid items-center gap-3 rounded-lg font-sinhala">
-                    <p>{title}</p>
+                    <p>{languageDate?.sinhalaTitle}</p>
                   </MenuItem>
                 </a>
               ))}
@@ -347,10 +355,10 @@ function MoviesListMenu() {
                 වර්ගිකරණය
                 </ListItem>
               </Typography>
-              {navMoviesCategory.map(({ title }, key) => (
+              {categoryData?.categories?.map(( category , key) => (
                 <a href="#" key={key}>
-                  <MenuItem className="grid items-center gap-3 rounded-lg">
-                    <p>{title}</p>
+                  <MenuItem className="grid items-center gap-3 rounded-lg font-sinhala">
+                    <p>{category.title} ({category.sinhalaTitle})</p>
                   </MenuItem>
                 </a>
               ))}
@@ -366,13 +374,12 @@ function TvShowListMenu() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
 
-  const renderItems = navListMenuItems.map(({ title }, key) => (
-    <a href="#" key={key}>
-      <MenuItem className="grid items-center gap-3 rounded-lg font-sinhala">
-        <p>{title}</p>
-      </MenuItem>
-    </a>
-  ));
+  const { data: categoryData } = useGetAllCategoryQuery()
+  const { data: languageData } = useGetAllLanguageQuery()
+  
+
+
+
 
   return (
     <React.Fragment>
@@ -421,10 +428,10 @@ function TvShowListMenu() {
                 භාෂාව
                 </ListItem>
               </Typography>
-              {navTvShowsLan.map(({ title }, key) => (
+              {languageData?.language?.map(( languageDate , key) => (
                 <a href="#" key={key}>
                   <MenuItem className="grid items-center gap-3 rounded-lg font-sinhala">
-                    <div><p>{title}</p></div>
+                    <p>{languageDate?.title} ({languageDate?.sinhalaTitle})</p>
                   </MenuItem>
                 </a>
               ))}
@@ -441,10 +448,10 @@ function TvShowListMenu() {
                 වර්ගිකරණය
                 </ListItem>
               </Typography>
-              {navTvShowCategory.map(({ title }, key) => (
+              {categoryData?.categories?.map(( category , key) => (
                 <a href="#" key={key}>
                   <MenuItem className="grid items-center gap-3 rounded-lg font-sinhala">
-                    <div><p>{title}</p></div>
+                    <p>{category.title} ({category.sinhalaTitle})</p>
                   </MenuItem>
                 </a>
               ))}
@@ -468,10 +475,10 @@ function TvShowListMenu() {
                 භාෂාව
                 </ListItem>
               </Typography>
-              {navTvShowsLan.map(({ title }, key) => (
+              {languageData?.language?.map(( languageDate , key) => (
                 <a href="#" key={key}>
                   <MenuItem className="grid items-center gap-3 rounded-lg font-sinhala">
-                    <div><p>{title}</p></div>
+                    <p>{languageDate?.sinhalaTitle}</p>
                   </MenuItem>
                 </a>
               ))}
@@ -488,10 +495,10 @@ function TvShowListMenu() {
                 වර්ගිකරණය
                 </ListItem>
               </Typography>
-              {navTvShowCategory.map(({ title }, key) => (
+              {categoryData?.categories?.map(( category , key) => (
                 <a href="#" key={key}>
                   <MenuItem className="grid items-center gap-3 rounded-lg font-sinhala">
-                    <div><p>{title}</p></div>
+                    <p>{category.title} ({category.sinhalaTitle})</p>
                   </MenuItem>
                 </a>
               ))}

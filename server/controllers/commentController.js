@@ -3,6 +3,7 @@ import Comment from "../models/commentModel.js";
 import Blog from "../models/blogModel.js";
 
 
+
 export const postComment = expressAsyncHandler(async (req, res) => {
 
   const userId = req.user.id
@@ -32,6 +33,8 @@ export const postComment = expressAsyncHandler(async (req, res) => {
       return res.status(404).json({ message: "Blog not found" });
     }
 });
+
+
 
 
 export const updateComment = expressAsyncHandler(async (req, res) => {
@@ -68,25 +71,28 @@ export const updateComment = expressAsyncHandler(async (req, res) => {
 
 export const deleteComment = expressAsyncHandler(async (req, res) => {
   const { commentId } = req.params; 
+  const { id } = req.user
   try {
+    const verifyUser = await Comment.findById(commentId)
 
-    const deletedComment = await Comment.findByIdAndDelete(commentId);
-
-    if (!deletedComment) {
-      return res.status(404).json({ message: "Comment not found" });
+    if(id == verifyUser.author){ 
+      const deletedComment = await Comment.findByIdAndDelete(commentId);
+      if (!deletedComment) {
+        return res.status(404).json({ message: "Comment not found" });
+      }
+      
+          const blog = await Blog.findOneAndUpdate(
+            { comments: commentId },
+            { $pull: { comments: commentId } },
+            { new: true }
+          );
+          if (!blog) {
+            return res.status(404).json({ message: "Blog not found" });
+          }
+          res.status(200).json({ message: "Comment deleted successfully" });
+    }else{
+      return res.status(404).json({ message: "Not your Comment" });
     }
-
-    const blog = await Blog.findOneAndUpdate(
-      { comments: commentId },
-      { $pull: { comments: commentId } },
-      { new: true }
-    );
-
-    if (!blog) {
-      return res.status(404).json({ message: "Blog not found" });
-    }
-
-    res.status(200).json({ message: "Comment deleted successfully" });
   } catch (error) {
     res.status(500).json({ message: "Failed to delete comment", error: error.message });
   }
@@ -229,3 +235,71 @@ export const removeDislikeComment = expressAsyncHandler(async (req, res) => {
     return res.status(500).json({ message: 'Failed to remove dislike from comment', error: error.message });
   }
 });
+
+
+export const createReplyComment = expressAsyncHandler(async (req, res) => {
+  const { commentId } = req.params;
+  const { id: userId } = req.user;
+  const { comment } = req.body;
+
+  try {
+    const parentComment = await Comment.findById(commentId);
+
+    if (!parentComment) {
+      return res.status(404).json({ message: 'Parent comment not found' });
+    }
+
+    const newReplyComment = await Comment.create({
+      comment,
+      author: userId,
+    });
+
+    parentComment.reply.push(newReplyComment);
+    await parentComment.save();
+
+    res.status(201).json({ message: 'Reply comment created successfully', comment: newReplyComment });
+  } catch (error) {
+    console.error('Error creating reply comment:', error);
+    res.status(500).json({ message: 'Failed to create reply comment', error: error.message });
+  }
+});
+
+
+
+
+
+
+export const deleteReplyComment = expressAsyncHandler(async (req, res) => {
+  const { commentId, replyCommentId } = req.params;
+  const { id: userId } = req.user;
+
+  try {
+    const parentComment = await Comment.findById(commentId);
+
+    if (!parentComment) {
+      return res.status(404).json({ message: 'Parent comment not found' });
+    }
+
+    const replyCommentIndex = parentComment.reply.findIndex((reply) => reply._id == replyCommentId);
+
+    if (replyCommentIndex === -1) {
+      return res.status(404).json({ message: 'Reply comment not found' });
+    }
+
+    const replyComment = parentComment.reply[replyCommentIndex];
+
+    // Check if the authenticated user is the author of the reply comment
+    if (replyComment.author.toString() !== userId) {
+      return res.status(403).json({ message: 'Unauthorized access: You are not the author of this reply comment' });
+    }
+
+    parentComment.reply.splice(replyCommentIndex, 1);
+    await parentComment.save();
+
+    res.status(200).json({ message: 'Reply comment deleted successfully' });
+  } catch (error) {
+    console.error('Error deleting reply comment:', error);
+    res.status(500).json({ message: 'Failed to delete reply comment', error: error.message });
+  }
+});
+

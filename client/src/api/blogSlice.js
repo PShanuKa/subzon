@@ -1,33 +1,24 @@
-import { BLOG_URL } from "../constants";
+import { BLOG_URL, COMMENT_URL } from "../constants";
 import { apiSlice } from "./apiSlice";
 
-
 export const blogApiSlice = apiSlice.injectEndpoints({
-    endpoints: (builder) => ({
-        getAllBlogs: builder.query({
-            query: () => `${BLOG_URL}/all`,
-            method: "GET"
-        }),
-        getABlog: builder.query({
-            query: (slug) => ({
-                url: `${BLOG_URL}/${slug}`,
-                method: "GET",
-            })
-        }),
-        postLikeComment: builder.mutation({
-            query: (id) => ({
-                url: `${BLOG_URL}/comment/like/${id}`,
-                method: "POST",
-            })
-        }),
-        postDisLikeComment: builder.mutation({
-            query: (id) => ({
-                url: `${BLOG_URL}/comment/dislike/${id}`,
-                method: "POST",
-            })
-        }),
-    })
-})
+  endpoints: (builder) => ({
+    getAllBlogs: builder.query({
+      query: () => `${BLOG_URL}/all`,
+      method: "GET",
+    }),
+    getABlog: builder.query({
+      query: (slug) => ({
+        url: `${BLOG_URL}/${slug}`,
+        method: "GET",
+      }),
+    }),
+    
+  }),
+});
 
+export const {
+  useGetAllBlogsQuery,
+  useGetABlogQuery,
 
-export const {useGetAllBlogsQuery, useGetABlogQuery, usePostLikeCommentMutation,usePostDisLikeCommentMutation} =blogApiSlice
+} = blogApiSlice;

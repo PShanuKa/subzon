@@ -5,7 +5,6 @@ import Card from "../Components/Card";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import { Button } from "@material-tailwind/react";
-import { getAllBlog } from "../features/blogSlice";
 import CardSkeleton from "../Components/CardSkeleton";
 import { useGetAllBlogsQuery } from "../api/blogSlice";
 const Home = () => {

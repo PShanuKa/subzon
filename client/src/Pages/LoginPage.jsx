@@ -58,6 +58,7 @@ import { toast } from "react-toastify";
     useEffect(() => {
       if (userInfo) {
         navigate('/');
+        window.location.reload();
       }
     }, [userInfo]);
 

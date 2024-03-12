@@ -58,13 +58,13 @@ export const updateLanguage = expressAsyncHandler(async (req, res) => {
 export const getAllLanguage = expressAsyncHandler(async (req, res) => {
   try {
     // Find all categories
-    const Lan = await Language.find();
+    const language = await Language.find();
 
     // Respond with the list of categories
     res.status(200).json({
       status: true,
       message: "Language fetched successfully",
-      Lan
+      language
     });
   } catch (error) {
     // Handle errors properly

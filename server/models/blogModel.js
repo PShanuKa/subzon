@@ -44,6 +44,10 @@ const blogSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User' 
     },
+    likes:[{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    }],
     imdb: String, 
     category: [{
         type: mongoose.Schema.Types.ObjectId,
@@ -67,7 +71,7 @@ const blogSchema = new mongoose.Schema({
     
     comments: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Comment' // Reference to comments associated with this blog
+        ref: 'Comment'
     }]
 }, {
     timestamps: true

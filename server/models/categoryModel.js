@@ -10,7 +10,6 @@ const categorySchema = new mongoose.Schema(
     },
     sinhalaTitle: {
       type: String,
-      // required: true,
     }
   },
   {
