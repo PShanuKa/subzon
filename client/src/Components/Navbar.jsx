@@ -172,15 +172,12 @@ function ProfileMenu() {
         </Button>
       </MenuHandler>
       <MenuList className="p-1">
-        {profileMenuItems.map(({ label, icon, link }, key) => {
-          const isLastItem = key === profileMenuItems.length - 1;
-          return (
-            <MenuItem
-              key={label}
-              onClick={closeMenu}
+       
+        <Link to="/dashboard">
+        <MenuItem
               className={`flex items-center gap-2 rounded`}
             >
-              {React.createElement(icon, {
+              {React.createElement(UserCircleIcon, {
                 className: `h-4 w-4 `,
                 strokeWidth: 2,
               })}
@@ -189,12 +186,11 @@ function ProfileMenu() {
                 variant="small"
                 className="font-normal"
                 color="inherit"
-              >
-                {label}
+                >
+                My Profile
               </Typography>
             </MenuItem>
-          );
-        })}
+                </Link>
         <MenuItem
               key="2"
               onClick={()=>(

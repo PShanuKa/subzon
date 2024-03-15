@@ -9,7 +9,7 @@ export const commentRouter = express.Router();
 // Create A Reply Comment
 commentRouter.post("/reply/:commentId",authMiddleware, createReplyComment);
 
-commentRouter.delete("reply/:commentId/:replyCommentId" , authMiddleware, deleteReplyComment);
+commentRouter.delete("/reply/:replyCommentId" , authMiddleware, deleteReplyComment);
 
 
 

@@ -107,8 +107,41 @@ const SinglePage = () => {
     console.log("Reply Comment Created");
   };
 
+
+  const handleReplyDeleteComment = (id) => {
+    
+    if (yourTokenHere) {
+      Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!",
+      }).then((result) => {
+        
+        
+        axios
+      .delete(`http://localhost:3000/api/comment/reply/${id}`, config)
+      .then(() => {
+        refetch();
+        setReplyToggle(-10);
+        toast.success("Reply Deleted"); 
+      })
+      .catch(function (error) {
+        console.error(error); 
+      });
+    });
+    } else {
+        toast.error("Please login first");
+    }
+    console.log("Reply Deleted"); 
+};
+
   const handleComment = (id) => {
     if (yourTokenHere) {
+
       axios
         .post(
           `http://localhost:3000/api/comment/${AMovieData?.blog?._id}`,
@@ -510,9 +543,9 @@ if (timeDifferenceInSeconds < 60) {
                     <p
                       as="button"
                       onClick={() => {
-                        setReplyToggle("-10");
+                        setReplyToggle(index);
                         setReplyComment("");
-                        toast.error("Sorry! Not Working Reply funtion");
+                        // toast.error("Sorry! Not Working Reply funtion");
                       }}
                       className=" cursor-pointer"
                     >
@@ -565,24 +598,24 @@ if (timeDifferenceInSeconds < 60) {
                 ""
               )}
 
-              {data?.reply?.map((data, index) => (
+              {data?.reply?.map((reply, index) => (
                 <div
                   key={index + 1}
                   className="w-full ml-10 flex gap-5 items-center mt-3"
                 >
                   <Avatar
                     size="sm"
-                    src={data?.author?.user_image}
+                    src={reply?.author?.user_image}
                     alt="avatar"
                   />
                   <div>
                     <div className="flex gap-5">
                       <p className="text-[16px]">
-                        @{data?.author?.firstname}_{data?.author?.lastname}
+                        @{reply?.author?.firstname}_{reply?.author?.lastname}
                       </p>
                       <p className="opacity-60">6 days ago</p>
                     </div>
-                    <p>{data?.comment}</p>
+                    <p>{reply?.comment}</p>
                     <div className="flex gap-4">
                       <div className="flex gap-2 items-center">
                         <div className="cursor-pointer">
@@ -597,11 +630,11 @@ if (timeDifferenceInSeconds < 60) {
 
                         <p></p>
                       </div>
-                      {userInfo?._id === data?.author?._id && (
+                      {userInfo?._id === reply?.author?._id && (
                         <p
                           as="button"
                           onClick={() => {
-                            // handleDeleteComment(data?._id);
+                            handleReplyDeleteComment(reply?._id);
                           }}
                           className="text-red-800 cursor-pointer"
                         >

@@ -270,36 +270,36 @@ export const createReplyComment = expressAsyncHandler(async (req, res) => {
 
 
 export const deleteReplyComment = expressAsyncHandler(async (req, res) => {
-  const { commentId, replyCommentId } = req.params;
+  const { replyCommentId } = req.params;
   const { id: userId } = req.user;
 
   try {
-    const parentComment = await Comment.findById(commentId);
+    // Find the comment with the specified replyCommentId
+    const comment = await Comment.findOne({ "reply._id": replyCommentId });
 
-    if (!parentComment) {
-      return res.status(404).json({ message: 'Parent comment not found' });
+    if (!comment) {
+      return res.status(404).json({ message: "Comment not found" });
     }
 
-    const replyCommentIndex = parentComment.reply.findIndex((reply) => reply._id == replyCommentId);
+    // Find the reply comment within the comment
+    const replyCommentIndex = comment.reply.findIndex(
+      (reply) => reply._id.toString() === replyCommentId && reply.author.toString() === userId
+    );
 
     if (replyCommentIndex === -1) {
-      return res.status(404).json({ message: 'Reply comment not found' });
+      return res.status(404).json({ message: "Reply comment not found or you are not authorized to delete it" });
     }
 
-    const replyComment = parentComment.reply[replyCommentIndex];
+    // Remove the reply comment from the reply array
+    comment.reply.splice(replyCommentIndex, 1);
 
-    // Check if the authenticated user is the author of the reply comment
-    if (replyComment.author.toString() !== userId) {
-      return res.status(403).json({ message: 'Unauthorized access: You are not the author of this reply comment' });
-    }
+    // Save the updated comment
+    await comment.save();
 
-    parentComment.reply.splice(replyCommentIndex, 1);
-    await parentComment.save();
-
-    res.status(200).json({ message: 'Reply comment deleted successfully' });
+    return res.status(200).json({ message: "Reply comment deleted successfully" });
   } catch (error) {
-    console.error('Error deleting reply comment:', error);
-    res.status(500).json({ message: 'Failed to delete reply comment', error: error.message });
+    console.error(error);
+    return res.status(500).json({ message: "Internal server error" });
   }
 });
 

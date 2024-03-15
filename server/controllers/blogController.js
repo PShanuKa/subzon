@@ -62,7 +62,7 @@ export const getAllBlog = expressAsyncHandler(async (req, res) => {
   try {
     const blogs = await Blog.find()
       .populate("category", "title")
-      .populate("creator", "firstname")
+      .populate("creator", "firstname lastname")
       .populate("language", "title")
       .populate({
         path: "comments",
@@ -99,28 +99,30 @@ export const getAllBlog = expressAsyncHandler(async (req, res) => {
 export const getABlog = expressAsyncHandler(async (req, res) => {
   try {
     const { slug } = req.params;
+    console.log(123)
 
     const blog = await Blog.findOne({ slug })
-  .populate("category", "title")
-  .populate("creator", "firstname lastname")
-  .populate("language", "title")
-  .populate({
-    path: "comments",
-    select: "comment author like dislike reply",
-    populate: [
-      {
-        path: "author",
-        select: "firstname lastname user_image _id"
-      },
-      {
-        path: "reply",
-        populate: {
-          path: "author",
-          select: "firstname lastname user_image _id"
-        }
-      }
-    ]
-  });
+      .populate("category", "title")
+      .populate("creator", "firstname lastname")
+      .populate("language", "title")
+      .populate({
+        path: "comments",
+        select: "comment author like dislike reply",
+        populate: [
+          {
+            path: "author",
+            select: "firstname lastname user_image _id",
+          },
+          {
+            path: "reply",
+            populate: {
+              path: "author",
+              select: "firstname lastname user_image _id",
+            },
+          },
+        ],
+      });
+      
 
     if (!blog) {
       return res.status(404).json({ status: false, message: "Blog not found" });
@@ -142,7 +144,6 @@ export const getABlog = expressAsyncHandler(async (req, res) => {
   }
 });
 
-
 // Like a blog
 export const likeBlog = expressAsyncHandler(async (req, res) => {
   try {
@@ -156,7 +157,9 @@ export const likeBlog = expressAsyncHandler(async (req, res) => {
 
     // Check if the user has already liked the blog
     if (blog.likes.includes(req.user.id)) {
-      return res.status(400).json({ status: false, message: "You have already liked this blog" });
+      return res
+        .status(400)
+        .json({ status: false, message: "You have already liked this blog" });
     }
 
     // Add user id to the likes array
@@ -194,7 +197,9 @@ export const unlikeBlog = expressAsyncHandler(async (req, res) => {
     // Check if the user has liked the blog
     const userIndex = blog.likes.indexOf(req.user.id);
     if (userIndex === -1) {
-      return res.status(400).json({ status: false, message: "You have not liked this blog" });
+      return res
+        .status(400)
+        .json({ status: false, message: "You have not liked this blog" });
     }
 
     // Remove the user's id from the likes array
